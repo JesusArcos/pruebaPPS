@@ -1,0 +1,13 @@
+!/bin/sh
+# This is an example of what adding gitleaks to a pre-commit hook would look like.
+gitleaks detect --source . --report-path gitleaks_report.json
+
+# Comprobar si gitleaks encontró fugas
+if [[ -s gitleaks_report.json ]]; then
+    echo "Se encontraron fugas de información. Revisa gitleaks_report.json."
+    exit 1  # Cancela el commit
+fi
+
+# Si no hay fugas, continuar con el commit
+rm gitleaks_report.json
+exit 0
